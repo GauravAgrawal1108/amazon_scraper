@@ -29,7 +29,7 @@ class AmazonScraperSpider(scrapy.Spider):
 
     def parse(self, response):
         articles_list = response.xpath('//*[@class="puisg-row"]//*[@data-cy="title-recipe"]//h2//a//@href').extract()
-        print(articles_list,"-----------aaaaaaaaaaaa")
+
         total_page = response.xpath('//*[@class="s-pagination-item s-pagination-disabled"]//text()').get()
         for i in articles_list:
             url = response.urljoin(i)
@@ -46,7 +46,6 @@ class AmazonScraperSpider(scrapy.Spider):
         articles_list = response.xpath('//*[@class="puisg-row"]//*[@data-cy="title-recipe"]//h2//a//@href').extract()
         for i in articles_list:
             url = response.urljoin(i)
-            print(url,"-------------ppppppppppp")
             request = Request(url, dont_filter=True, callback=self.parse_article)
             yield request
 
